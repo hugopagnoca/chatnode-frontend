@@ -37,6 +37,12 @@ export function Sidebar() {
       socket.joinRoom(room.id);
 
       setCurrentRoom(room);
+
+      // Mark room as read
+      await api.markRoomAsRead(room.id);
+
+      // Refresh rooms to update unread counts
+      await fetchRooms();
     } catch (error) {
       console.error('Failed to join room:', error);
     }
@@ -128,6 +134,11 @@ export function Sidebar() {
                       <p className="text-sm text-gray-500 truncate">{room.description}</p>
                     )}
                   </div>
+                  {room.unreadCount && room.unreadCount > 0 && (
+                    <div className="flex-shrink-0 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                      {room.unreadCount > 99 ? '99+' : room.unreadCount}
+                    </div>
+                  )}
                 </div>
               </button>
             ))}

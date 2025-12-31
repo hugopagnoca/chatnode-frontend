@@ -32,6 +32,7 @@ export interface Room {
   createdAt: string;
   updatedAt: string;
   memberCount?: number;
+  unreadCount?: number;
 }
 
 // Message types

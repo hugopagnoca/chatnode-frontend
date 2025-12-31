@@ -72,9 +72,23 @@ export const useChatStore = create<ChatState>((set, get) => ({
   },
 
   addMessage: (message) => {
-    const { currentRoom, messages } = get();
+    const { currentRoom, messages, rooms } = get();
+
     if (currentRoom && message.roomId === currentRoom.id) {
+      // Message is for current room - add to messages
       set({ messages: [...messages, message] });
+    } else {
+      // Message is for a different room - increment unread count
+      const updatedRooms = rooms.map(room => {
+        if (room.id === message.roomId) {
+          return {
+            ...room,
+            unreadCount: (room.unreadCount || 0) + 1,
+          };
+        }
+        return room;
+      });
+      set({ rooms: updatedRooms });
     }
   },
 

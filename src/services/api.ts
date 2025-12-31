@@ -103,6 +103,12 @@ class ApiService {
     });
   }
 
+  async markRoomAsRead(roomId: string): Promise<void> {
+    return this.request(`/rooms/${roomId}/mark-read`, {
+      method: 'POST',
+    });
+  }
+
   // Message endpoints
   async getMessages(roomId: string, page = 1, limit = 50): Promise<{ messages: Message[] }> {
     return this.request<{ messages: Message[] }>(
