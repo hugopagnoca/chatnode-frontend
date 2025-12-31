@@ -14,6 +14,7 @@ class SocketService {
 
     this.socket = io(SOCKET_URL, {
       auth: { token },
+      withCredentials: true,
     });
 
     this.socket.on('connect', () => {
