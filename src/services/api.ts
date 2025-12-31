@@ -1,4 +1,4 @@
-import type { AuthResponse, LoginCredentials, RegisterCredentials, Room, Message } from '../types';
+import type { AuthResponse, LoginCredentials, RegisterCredentials, Room, Message, User } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
@@ -28,9 +28,9 @@ class ApiService {
   ): Promise<T> {
     const token = this.getToken();
 
-    const headers: HeadersInit = {
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...options.headers,
+      ...(options.headers as Record<string, string>),
     };
 
     if (token) {
